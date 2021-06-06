@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Include SciChart.js -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/scichart@1.4.1607/_wasm/scichart.browser.js"
+      crossorigin="anonymous"
+    ></script>
+    <title>Testing with Puppeteer</title>
+  </head>
+  <body style="margin: 0; padding: 0">
+    <div
+      id="scichart-root"
+      style="width: 900px; min-height: 600px; display: none"
+    ></div>
+    <script>
+      async function initSciChart() {
+        // In order to load data file from the CDN we need to set dataUrl
+        SciChart.SciChartSurface.configure({
+          dataUrl:
+            "https://cdn.jsdelivr.net/npm/scichart@1.4.1607/_wasm/scichart2d.data",
+          wasmUrl:
+            "https://cdn.jsdelivr.net/npm/scichart@1.4.1607/_wasm/scichart2d.wasm",
+        });
+        const { sciChartSurface, wasmContext } =
+          await SciChart.SciChartSurface.create("scichart-root");
+        const xAxis = new SciChart.NumericAxis(wasmContext);
+        sciChartSurface.xAxes.add(xAxis);
+
+        const yAxis = new SciChart.NumericAxis(wasmContext, {
+          growBy: new SciChart.NumberRange(0.05, 0.05),
+        });
+        sciChartSurface.yAxes.add(yAxis);
+
+        // Create an XyDataSeries as data source
+        const xyDataSeries = new SciChart.XyDataSeries(wasmContext);
+        for (let i = 0; i < 100; i++) {
+          xyDataSeries.append(i, Math.sin(i * 0.1));
+        }
+
+        // Create and add a line series to the chart
+        const lineSeries = new SciChart.FastLineRenderableSeries(wasmContext, {
+          stroke: "#ff6600",
+          strokeThickness: 5,
+          dataSeries: xyDataSeries,
+        });
+        sciChartSurface.renderableSeries.add(lineSeries);
+        sciChartSurface.annotations.add(
+          new SciChart.TextAnnotation({
+            text: "Text Annotation",
+            fontSize: 24,
+            x1: 30,
+            y1: 1,
+          })
+        );
+
+        sciChartSurface.chartModifiers.add(
+          new SciChart.LegendModifier({ showCheckboxes: true })
+        );
+
+        document.getElementById("scichart-root").style.display = "block";
+      }
+
+      initSciChart();
+    </script>
+  </body>
+</html>

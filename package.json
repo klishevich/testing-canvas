@@ -1,0 +1,20 @@
+{
+  "name": "testing-canvas",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node tests/test1.js",
+    "start": "serve"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "puppeteer": "^10.0.0"
+  },
+  "devDependencies": {
+    "prettier": "^2.3.1",
+    "serve": "^11.3.2"
+  }
+}
