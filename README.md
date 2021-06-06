@@ -1,4 +1,6 @@
-# Testing Cavnas with Puppeteer
+# Testing SciChart Cavnas with Puppeteer
+
+Open and run Licensing Wizard
 
 1. `npm install`
 2. `npm start`

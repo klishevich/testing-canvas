@@ -11,7 +11,7 @@ const url = "http://localhost:5000";
     visible: true,
   });
   await page.screenshot({
-    path: "tests/test1.png",
+    path: "testImgGeneration/test1.png",
     clip: { x: 0, y: 0, width: 900, height: 600 },
   });
 
